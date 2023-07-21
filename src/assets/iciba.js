@@ -72,7 +72,7 @@
         },
 
         getSettings: function( next ){
-            chrome.storage.local.get( [ 'setting_huaci', 'setting_auto_pronounce', 'setting_auto_add_to_my_note' ], function( items ){
+            chrome.storage.local.get( [ 'setting_huaci', 'setting_auto_pronounce', 'setting_auto_add_to_my_note', 'setting_auto_lower' ], function( items ){
                 next( items );
             });
         },

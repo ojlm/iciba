@@ -3,6 +3,7 @@
     var ICIBA = host.__$ICIBA;
     var IF_AUTO_PRONOUNCE = false;
     var IF_AUTO_ADD_TO_MY_NOTE = false;
+    var IF_AUTO_LOWER = false;
 
     var DICT = function( container ){
 
@@ -104,6 +105,7 @@
             <div class="iciba-extension-settings J_IcibaSettings">\
                 <div class="item J_Item" data-name="setting_huaci"><i class="fa fa-square-o"></i> 划词翻译</div>\
                 <div class="item J_Item" data-name="setting_auto_pronounce"><i class="fa fa-check-square-o"></i> 自动发声</div>\
+                <div class="item J_Item" data-name="setting_auto_lower"><i class="fa fa-square-o"></i> 自动小写</div>\
                 <div class="item J_Item" data-name="setting_auto_add_to_my_note"><i class="fa fa-square-o"></i> 自动添加生词本</div>\
             </div>\
         </div>\
@@ -173,6 +175,7 @@
 
                 IF_AUTO_ADD_TO_MY_NOTE = settings.setting_auto_add_to_my_note;
                 IF_AUTO_PRONOUNCE = settings.setting_auto_pronounce;
+                IF_AUTO_LOWER = settings.setting_auto_lower;
 
                 self.domSettings.find( '.J_Item' )
                     .each( function(){
@@ -204,6 +207,7 @@
             chrome.storage.onChanged.addListener(function callback( changes ){
                 changes.setting_auto_add_to_my_note && ( IF_AUTO_ADD_TO_MY_NOTE = changes.setting_auto_add_to_my_note.newValue );
                 changes.setting_auto_pronounce && ( IF_AUTO_PRONOUNCE = changes.setting_auto_pronounce.newValue );
+                changes.setting_auto_lower && ( IF_AUTO_LOWER = changes.setting_auto_lower.newValue );
             });
 
             function updateItem( item, checked ){
@@ -231,6 +235,11 @@
 
             if( w ){
                 this.domKeyword.val( w );
+            }
+
+            if (IF_AUTO_LOWER) {
+                word = word.toLowerCase();
+                this.domKeyword.val( word );
             }
 
             ICIBA.search( word, function( result ){
